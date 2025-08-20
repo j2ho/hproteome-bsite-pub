@@ -39,14 +39,31 @@ def helpresult(request):
     return render(request, 'helpresult.html')
     
 import os 
+from django.http import Http404
+from django.utils._os import safe_join
+
 def tool_download(request): 
-    path = request.GET['path']
-    file_path = os.path.join(settings.MEDIA_ROOT, path)
-    if os.path.exists(file_path): 
+    path = request.GET.get('path', '')
+    if not path:
+        raise Http404("File not found")
+    
+    # Prevent path traversal attacks
+    try:
+        file_path = safe_join(settings.MEDIA_ROOT, path)
+    except ValueError:
+        raise Http404("Invalid file path")
+    
+    # Ensure file exists and is within MEDIA_ROOT
+    if not os.path.exists(file_path) or not file_path.startswith(settings.MEDIA_ROOT):
+        raise Http404("File not found")
+    
+    try:
         with open(file_path, 'rb') as f: 
-                response = HttpResponse(f.read(), content_type='application/octet-stream')
-                response['Content-Disposition'] = 'attachment; filename='+os.path.basename(file_path)
-                return response 
+            response = HttpResponse(f.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+            return response
+    except (IOError, OSError):
+        raise Http404("File could not be read") 
 
 class SearchResultsView(generic.ListView): 
     model = Target
