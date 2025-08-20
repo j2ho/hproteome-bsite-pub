@@ -53,29 +53,12 @@ hproteome-bsite-pub/
 
 ## ⚠️ Repository Notes
 
-This is a **portfolio showcase repository** containing the core source code. Please note:
+This is a **showcase repository** containing the core source code. Please note:
 
 - **Static files excluded**: Production static files (CSS, JS, images) are not included
 - **Security files removed**: Sensitive configuration and credentials have been removed
 - **Live deployment**: The fully functional version is available at the link above
-- **Data files**: Limited subset of protein structure files included for demonstration
-
-## 🎯 Development Highlights
-
-- **Full-stack Development**: Complete Django web application from database design to frontend
-- **Database Architecture**: Efficient schema design for large-scale proteome data with 20,000+ domains
-- **User Experience**: Intuitive interface for complex scientific data exploration
-- **Performance Optimization**: Optimized queries and caching for large datasets
-- **Molecular Visualization**: Advanced 3D structure visualization capabilities
-
-## 💼 About This Project
-
-This project demonstrates:
-- **Web Development Skills**: Django framework, Python backend development
-- **Database Design**: Complex relational database architecture for scientific data
-- **Scientific Computing**: Bioinformatics data processing and analysis
-- **Full-Stack Development**: From data processing to user interface
-- **Academic Collaboration**: Published research with practical implementation
+- **Data files**: Actual predictions (PDB files for complex structures) are excluded
 
 ## Contact
 
