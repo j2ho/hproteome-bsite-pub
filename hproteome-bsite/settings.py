@@ -12,12 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 import os, json
 from django.core.exceptions import ImproperlyConfigured
@@ -38,7 +33,7 @@ SECRET_KEY = get_secret("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = "DJANGO_DEBUG" in os.environ
 
-ALLOWED_HOSTS = ['galaxy.seoklab.org']
+ALLOWED_HOSTS = ['localhost']
 if DEBUG:
     ALLOWED_HOSTS.append('localhost')
 
@@ -110,14 +105,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 STATICFILES_DIRS = [
     BASE_DIR / "static/",
-    "/home/galaxy/web_server/web/html/static/",
 ]
-#STATIC_ROOT = os.path.join('/home/j2ho/django_all' , '/static/')
-# Media files
 
+# Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/j2ho/django_all/media/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
