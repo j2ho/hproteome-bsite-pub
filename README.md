@@ -29,11 +29,6 @@ method. Upon building HProteome-BSite, I have updated GalaxySite both database- 
 <img src="assets/algorithm.png" alt="Binding Site Prediction Pipeline" width="400">
 
 
-### Technologies Used
-- **Backend**: Python, Django 4.0.5
-- **Database**: SQLite3
-- **Frontend**: HTML, CSS, JavaScript, MolStar
-- **Deployment**: WSGI application server
 
 ## 📁 Repository Structure
 
