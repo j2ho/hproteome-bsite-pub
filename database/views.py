@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .models import * 
+from .models import Target, Domain, Site, LigandInstance, TemplateInstance 
 from django.http import HttpResponse
 from django.views import generic
 from django.db.models import Q 
@@ -68,27 +68,35 @@ def tool_download(request):
 class SearchResultsView(generic.ListView): 
     model = Target
     template_name = 'search_results.html'
+    
+    # Protein type mappings for user-friendly search terms
+    PROTEIN_TYPE_MAPPINGS = {
+        'gpcr': 'GP',
+        'protease': 'PR', 
+        'kinase': 'KI',
+        'ion channel': 'IC',
+        'ionchannel': 'IC',
+        'nhr': 'NHR',
+        'hormone receptor': 'NHR',
+        'nuclear hormone receptor': 'NHR',
+    }
+    
     def get_queryset(self): 
-        query = self.request.GET.get("q").strip(' ') 
-        if query.casefold() == 'gpcr'.casefold(): 
-            query = 'GP'
-        if query.casefold() == 'protease'.casefold():
-            query = 'PR'
-        if query.casefold() == 'kinase'.casefold():
-            query = 'KI'
-        if query.casefold() == 'ion channel'.casefold(): 
-            query = 'IC'
-        if query.casefold() == 'ionchannel'.casefold(): 
-            query = 'IC'
-        if query.casefold() == 'nhr'.casefold(): 
-            query = 'NHR'
-        if query.casefold() == 'hormone receptor'.casefold(): 
-            query = 'NHR'
-        if query.casefold() == 'nuclear hormone receptor'.casefold(): 
-            query = 'NHR'
-        object_list = Target.objects.filter(Q(uniprot__icontains=query) | Q(proteintype__icontains=query) |
-                Q(protname__icontains=query))
-        if len(object_list) == 0:
+        query = self.request.GET.get("q", "").strip()
+        if not query:
+            return Target.objects.none()
+        
+        # Map user-friendly terms to protein type codes
+        query_lower = query.lower()
+        mapped_query = self.PROTEIN_TYPE_MAPPINGS.get(query_lower, query)
+        
+        object_list = Target.objects.filter(
+            Q(uniprot__icontains=mapped_query) | 
+            Q(proteintype__icontains=mapped_query) |
+            Q(protname__icontains=mapped_query)
+        )
+        
+        if not object_list.exists():
             object_list = [query.upper()]
         return object_list
             
