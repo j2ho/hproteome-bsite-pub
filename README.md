@@ -6,7 +6,8 @@
 
 **Visit the live database**: [https://galaxy.seoklab.org/hproteome-bsite/database/](https://galaxy.seoklab.org/hproteome-bsite/database/)
 
-![HProteome-BSite Interface](assets/mainpage.png)
+<img src="assets/mainpage.png" alt="HProteome-BSite Interface" width="500">
+
 *Screenshot of the HProteome-BSite web interface*
 
 ## 📋 Project Overview
@@ -25,7 +26,7 @@ HProteome-BSite is a comprehensive database and web interface for exploring huma
 - Provided predictions of binding sites and ligands were made using GalaxySite, a template based binding site prediction
 method. Upon building HProteome-BSite, I have updated GalaxySite both database- and algorithm-wise. 
 - Outline of GalaxySite binding prediction on the AlphaFold human structure database. Details of this method can be found in the paper cited at the end. 
-![Binding Site Prediction Pipeline](assets/algorithm.png)
+<img src="assets/algorithm.png" alt="Binding Site Prediction Pipeline" width="400">
 
 
 ### Technologies Used
