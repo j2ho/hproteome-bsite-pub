@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/4.0/howto/deployment/wsgi/
 import os
 import sys
 
-path = '/home/j2ho/django_all'
+path = '/path/to/hproteome-bsite-pub'
 if path not in sys.path:
     sys.path.append(path) 
 
