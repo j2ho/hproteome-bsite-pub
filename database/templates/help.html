@@ -1,0 +1,16 @@
+{% extends "base_generic.html"%}
+{% load static %}
+{% block content %}
+          <div>
+              <br>
+              <div class="para_title"> Guideline for database users </div>
+              <br>
+              <div class="help_title">Available Help Pages</div>
+              <ul>
+                  <h2><li><a href={% url 'helpfind' %}>Finding Your Target</a></li></h2>
+                  <h2><li><a href={% url 'helpresult' %}>Reading Result Page</a></li></h2>
+                  <h2><li><a href={% url 'helpdock' %}>Docking Ligands</a></li></h2>
+              </ul>
+                <br>
+        </div>
+        {% endblock %}

@@ -1,0 +1,136 @@
+<script src="http://3Dmol.csb.pitt.edu/build/3Dmol-min.js""></script>
+
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+<div>
+    <br>
+    <div class="para_title_new">&nbsp&nbsp{{domain}} [{{domain.resnum}}]</div>
+        <h3>domain structure (pdb format) - <a href="https://galaxy.seoklab.org/data/{{domain.domainfile}}">[Download]</a> | {{domain.name}}</h3>
+        
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+        <div style="height: 400px; width: 400px; float: left; position: relative;"
+             class='viewer_3Dmoljs'data-href='https://galaxy.seoklab.org/data/{{domain.domainfile}}' data-backgroundcolor='0xffffff' data-style='cartoon' data-ui='true'></div>     
+        <div style="height: 400px; width:800px; float: left,display=block;  margin-left:20px">
+            This shows the structure of domain only.<br><br>To see docking results of top ranking ligand, click [View] from the table
+        </div>
+        <script type="text/javascript">
+                $('document').ready(function(mol2file){
+                    $('div.frame').load(mol2file+'.html');
+                });
+            </script>
+                    </td>
+                </tr> 
+            </tbody> 
+        </table>
+    <script>
+
+            $('#model_2').click(model_2);
+            $('#model_3').click(model_3);
+
+            document.addEventListener('DOMContentLoaded', model_1);
+            </script> 
+
+        </table>
+        {% if domain.seqcsvfile %}
+        <h3>Sequence Result</h3>
+        <table class="view">
+            <tbody>
+                <tr>
+                    <th>Site No.</th>
+                    <th>Coordinate</th>
+                    <th>Representative Ligand</th>
+                    <th><br>Templates<p>(PDBID_CHAIN_NUM_TMSCORE)</p></th>
+                </tr>
+            {% for site in domain.sites.all %}
+            {% if site.method == 'sequence' %}
+                <tr>
+                    <td>{{site.rank}}</td>
+                    <td>{{site.coordinate}}</td>
+                    <td>
+                        {% for ligand in site.ligands.all %}
+                        {% if ligand.ligcoord == site.coordinate %} 
+                        <p>{{ligand}}</p>
+                        {% if ligand.dockedfile %}
+                        <p><a href="{{ ligand.get_absolute_url }}">[View]</a></a>
+                        {% endif %}
+                        {% if ligand.mol2file %}
+                        <p><a href="hproteome-bsite/database/download?path={{ligand.mol2file}}">[Download docking pose]</a> </p>
+                        {% endif %}
+                        <p>
+                        <a href="https://www.rcsb.org/ligand/{{ligand.ligname}}">[RCSB Info]</a>
+                        </p>
+                        <td>
+                            {% for template in ligand.templates.all %}
+                            <p>{{template}}</p>
+                            {% endfor %}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        <br> 
+
+        {% if domain.strcsvfile %}
+        <h3>Structure Result <a</h3>
+        <br>
+        <table class="view" style="padding: 20px 0 0 0;">
+            <tbody>
+                <tr>
+                    <th>Site No.</th>
+                    <th>Coordinate</th>
+                    <th>Representative Ligand</th>
+                    <th>Templates</th>
+                </tr>
+            {% for site in domain.sites.all %}
+            {% if site.method == 'structure' %}
+                <tr>
+                    <td>{{site.rank}}</td>
+                    <td>{{site.coordinate}}</td>
+                    <td>
+                        {% for ligand in site.ligands.all %}
+                        {% if ligand.ligcoord == site.coordinate %} 
+                        <p>{{ligand}}</p>
+                        {% if ligand.dockedfile %}
+                        <p><a href="{{ ligand.get_absolute_url }}">[View]</a></a>
+                        {% endif %}
+                        {% if ligand.mol2file %}
+                        <p><a href="/database/download?path={{ligand.mol2file}}">[Download docking pose]</a> </p>
+                        {% endif %}
+                        <p>
+                        <a href="https://www.rcsb.org/ligand/{{ligand.ligname}}">[RCSB Info]</a>
+                        </p>
+                        <td>
+                            {% for template in ligand.templates.all %}
+                            <p>{{template}}</p>
+                            {% endfor %}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %} 
+
+        {% if domain.seqcsvfile %}
+        <h3>Sequence search results (in csv) - <a href="/database/download?path={{domain.seqcsvfile}}">[Download]</a></h3>
+    {% endif %}
+        {% if domain.strcsvfile %}
+        <h3>Structure search results (in csv)   - <a href="/database/download?path={{domain.strcsvfile}}">[Download]</a></h3>
+    {% endif %}
+  </div>
+  <br>
+{% endblock %} 
+

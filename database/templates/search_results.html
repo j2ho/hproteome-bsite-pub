@@ -1,0 +1,78 @@
+{% extends "base_generic_search.html" %}
+
+{% block content %}
+<div class="prevent-default-spacings">
+    <br>
+  <h1>Search Results</h1>
+  <br>
+
+      {% if object_list %}
+      {% for object in object_list %}
+    <title>HProteome-BSite: {{object}}</title>
+      {% if object.get_absolute_url %}
+      <div style="margin-left:20px;">
+      <ul>
+      <h2><li><a href="{{ object.get_absolute_url }}">{{ object.uniprot }}</a> ({{object.protname}})</li></h2>
+      </ul>
+      <br>
+      </div>
+      {% else %}
+          <div>
+          <p>Query: {{object}}</p>
+          <br>
+          <p><i>No match in the database due to poor model quality</i></p>
+          <br>
+            <div style="margin-top: 100px; " id="myViewer">
+            </div>
+          </div>
+      <br>
+    <script>
+
+      //Create plugin instance
+      var viewerInstance = new PDBeMolstarPlugin();
+
+      //Set options (Checkout available options list in the documentation)
+      var options = {
+        customData: {
+            url: 'https://alphafold.ebi.ac.uk/files/AF-{{object}}-F1-model_v1.cif',
+          format: 'cif'
+        },
+        alphafoldView: true,
+        bgColor: {r:255, g:255, b:255},
+      }
+
+      //Get element from HTML/Template to place the viewer
+      var viewerContainer = document.getElementById('myViewer');
+
+      //Call render method to display the 3D view
+      viewerInstance.render(viewerContainer, options);
+
+    </script>
+    <script>
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+var i;
+
+for (i = 0; i < coll.length; i++) {
+coll[i].addEventListener("click", function() {
+this.classList.toggle("active");
+var content = this.nextElementSibling;
+if (content.style.display === "block") {
+  content.style.display = "none";
+} else {
+  content.style.display = "block";
+}
+});
+}
+    </script>
+    {% endif %}
+    {% endfor %}
+
+{% endif %}
+</div>
+      <br>
+      <br>
+  </div>
+
+    {% endblock %}

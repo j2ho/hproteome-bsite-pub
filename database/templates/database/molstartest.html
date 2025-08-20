@@ -1,0 +1,178 @@
+    <style>
+      #myViewer{
+        float:left;
+        width:300px;
+        height: 300px;
+        position:relative;
+      }
+    </style>
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+
+        
+<div>
+    <br>
+    <div class="para_title_new">&nbsp&nbsp{{domain}} [{{domain.resnum}}]</div>
+        <h3>domain structure (pdb format) - <a
+                                                href="https://galaxy.seoklab.org/data/{{domain.domainfile}}">[Download]</a>
+            | <a id="model_1">{{domain.name}}</a></h3>
+        
+                        <div id=myViewer>
+                        </div> 
+            <br>
+            <br>
+        {% if domain.seqcsvfile %}
+        <h3>Sequence Result</h3>
+        <table class="view">
+            <tbody>
+                <tr>
+                    <th>Site No.</th>
+                    <th>Representative Ligand</th>
+                    <th><br>Templates<p>(PDBID_CHAIN_NUM_TMSCORE)</p></th>
+                    <th>Alternative Ligands</th>
+                </tr>
+            {% for site in domain.sites.all %}
+            {% if site.method == 'sequence' %}
+            {% if site.ligands.all %}
+            {% if site.rank <= 10 %}
+                <tr>
+                    <td>{{site.rank}}</td>
+                    <td>
+                        {% for ligand in site.ligands.all %}
+                        {% if ligand.ligcoord == site.coordinate %} 
+                        <p>{{ligand}}</p>
+                        {% if ligand.dockedfile %}
+                        <a id="model_{{ligand.liguniquename}}">[View]</a>
+                    {% else %}
+                        {% endif %}
+                        {% if ligand.mol2file %}
+                        <p><a href="https://galaxy.seoklab.org/data/{{ligand.mol2file}}">[Download docking pose]</a> </p>
+                        {% endif %}
+                        <p>
+                        <a href="https://www.rcsb.org/ligand/{{ligand.ligname}}">[RCSB Info]</a>
+                        </p>
+                        <td>
+                            {% for template in ligand.templates.all %}
+                            <p><a
+                                   href="https://galaxy.seoklab.org/cgi-bin/submit_SITE_DOCK.cgi?job=docking&job_type=SITE_DOCK&template={{template.templ_chain_lignum}}&lig={{ligand.ligname}}&domain={{domain.name}}">{{template}}</a></p>
+                            {% endfor %}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for ligand in site.ligands.all %}
+                        {% if ligand.ligcoord != site.coordinate %}
+                        {% if ligand.ligrank < 20 %}
+                        <a href="https://www.rcsb.org/ligand/{{ligand}}">&nbsp{{ligand}}</a>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                        </td>
+                </tr>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+            {% else %} 
+            <p>There are no ligands predicted by Sequence Search</p>
+        {% endif %}
+
+        <br> 
+        {% if domain.strcsvfile %}
+        <h3>Structure Result </h3>
+        <br>
+        <table class="view">
+            <tbody>
+                <tr>
+                    <th>Site No.</th>
+                    <th>Representative Ligand</th>
+                    <th><br>Templates<p>(PDBID_CHAIN_NUM_TMSCORE)</p></th>
+                    <th>Alternative Ligands</th>
+                </tr>
+            {% for site in domain.sites.all %}
+            {% if site.method == 'structure' %}
+            {% if site.ligands.all %}
+            {% if site.rank <= 10 %}
+                <tr>
+                    <td>{{site.rank}}</td>
+                    <td>
+                        {% for ligand in site.ligands.all %}
+                        {% if ligand.ligcoord == site.coordinate %} 
+                        <p>{{ligand}}</p>
+                        {% if ligand.dockedfile %}
+                        <a id="model_{{ligand.liguniquename}}">[View]</a>
+                        {% endif %}
+                        {% if ligand.mol2file %}
+                        <p><a href="https://galaxy.seoklab.org/data/{{ligand.mol2file}}">[Download docking pose]</a> </p>
+                        {% endif %}
+                        <p>
+                        <a href="https://www.rcsb.org/ligand/{{ligand.ligname}}">[RCSB Info]</a>
+                        </p>
+                        <td>
+                            {% for template in ligand.templates.all %}
+                            <p><a
+                                   href="https://galaxy.seoklab.org/cgi-bin/submit_SITE_DOCK.cgi?job=docking&job_type=SITE_DOCK&template={{template.templ_chain_lignum}}&lig={{ligand.ligname}}&domain={{domain.name}}">{{template}}</a></p>
+                            {% endfor %}
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for ligand in site.ligands.all %}
+                        {% if ligand.ligcoord != site.coordinate %}
+                        {% if ligand.ligrank < 20 %}
+                        <a href="https://www.rcsb.org/ligand/{{ligand}}">&nbsp{{ligand}}</a>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+            {% else %} 
+            <p>There are no ligands predicted by Structure Search</p>
+        {% endif %} 
+
+        {% if domain.seqcsvfile %}
+        <h3><li>Sequence search results (in csv) - <a
+                                                   href="https://galaxy.seoklab.org/data/{{domain.seqcsvfile}}">[Download]</a></li></h3>
+    {% endif %}
+        {% if domain.strcsvfile %}
+        <h3><li>Structure search results (in csv)   - <a
+                                                          href="https://galaxy.seoklab.org/data/{{domain.strcsvfile}}">[Download]</a></li></h3>
+    {% endif %}
+    <hr>
+    <h3>You can also get docking results for alternative ligands using <a
+            href="https://galaxy.seoklab.org/cgi-bin/submit.cgi?type=SITE_DOCK"><strong>[HProteome-BSite
+            Docking]</strong></a> | <a href={% url 'helpdock'%}>[Help Page - Docking]</a></h3>
+  </div>
+  <br> 
+  <script>
+
+      //Create plugin instance
+      var viewerInstance = new PDBeMolstarPlugin();
+  
+      //Set options (Checkout available options list in the documentation)
+      var options = {
+        moleculeId: '2nnu',
+        hideControls: true,
+        bgColor:{r:255, g:255, b:255}
+      }
+      
+      //Get element from HTML/Template to place the viewer 
+      var viewerContainer = document.getElementById('myViewer');
+  
+      //Call render method to display the 3D view
+      viewerInstance.render(viewerContainer, options);
+
+            </script> 
+{% endblock %} 
+

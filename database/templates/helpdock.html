@@ -1,0 +1,30 @@
+{% extends "base_generic.html"%}
+{% load static %}
+{% block content %}
+          <div>
+              <br>
+              <div class="para_title">Docking potential ligands to generate binding pose </div>
+              <h2>This page shows how to dock representative/alternative ligands</h2>
+              <h2>1. Docking representative ligands (cluster representatives shown on the main report table)</h2>
+              <br>
+              <img src={% static 'images/help103.png' %} width=900px; border=1px;>
+              <br>
+              <br>
+              <br>
+              <hr>
+              <br>
+              <h2>2. Using alternative ligands</h2>
+              <h3>&nbsp&nbsp 2-1. download csv file from result page</h3>
+              <img src={% static 'images/help6.png' %} width=900px; border=1px; >
+              <h3>&nbsp&nbsp 2-2. Click [Hproteome-Bsite Docking]</h3>
+              <ul>
+              <h3>&nbspHproteome-Bsite Docking: <a
+                                                          href="https://galaxy.seoklab.org/cgi-bin/submit.cgi?type=SITE_DOCK">[LINK]</a></h3>
+              </ul>
+              <h3>&nbsp&nbsp 2-3. Type in inputs from the csv file to the webserver and click 'Submit'</h3>
+              <img src={% static 'images/help7_1.png' %} width=900px; border=1px;>
+              <img src={% static 'images/help7_2.png' %} width=900px; border=1px;>
+                <br>
+                <br>
+        </div>
+        {% endblock %}

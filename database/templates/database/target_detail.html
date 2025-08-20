@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+{% block content %}
+      <div>
+          <br>
+  <h1>UniProtKB - {{ target.uniprot }}</h1>
+      <h2> {{ target.protname }}  <a href="https://www.uniprot.org/uniprot/{{target.uniprot}}">[UniProt]</a></h2>
+    <hr>
+  <div style="margin-left:20px;margin-top:20px">
+      <h2>Domains [residues]</h2>
+      {% for domain in target.domains.all %}
+      <h2><li><strong><a href="{{domain.get_absolute_url}}">{{ domain }} [{{domain.resnum}}]</a></strong></li></h2>
+      {% endfor %}
+      </div>
+      <br>
+  </div>
+{% endblock %}

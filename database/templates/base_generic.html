@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load static %}
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="{% static 'js/menu.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style_sitedb.css' %}">
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="header">
+            <h1>
+                <a href="{% url 'index' %}">HProteome-BSite</a>
+            </h1>
+            <h2>An online database for ligand binding sites in human proteome</h2>
+            <h3>Computational Biology Lab, Department of Chemistry, Seoul National University</h3>
+        </div>
+        <div id="menu">
+            <ul>
+                <li>
+                    <a href="{% url 'searchhome' %}">Search</a>
+                </li>
+                <li class="service">
+                    <a>Help</a>
+                    <ul>
+                        <li><a href="{% url 'statistics' %}">Statistics</a></li>
+                        <li><a href="{% url 'helpfind' %}">How to search</a></li>
+                        <li><a href="{% url 'helpresult' %}">Interpreting report</a></li>
+                        <li><a href="{% url 'helpdock' %}">Run docking</a></li>
+                    </ul>
+                </li>
+                <li class="service">
+                    <a>Entries</a>
+                    <ul>
+                        <li><a href="{% url 'targets' %}">All Entries<a></li>
+                        <li><a href="{% url 'gpcrs' %}">GPCRs</a></li>
+                        <li><a href="{% url 'proteases' %}">Proteases</a></li>
+                        <li><a href="{% url 'kinases' %}">Kinases</a></li>
+                        <li><a href="{% url 'nhrs' %}">NHRs</a></li>
+                        <li><a href="{% url 'ionchannels' %}">Ion Channels</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{% url 'bulkdownload' %}">Downloads</a>
+                </li>
+            </ul>
+                <div id="search-container">
+                    <form action="{% url 'search_results' %}" method="get">
+                        <input name="q" type="text" placeholder="Get Your BSites!"
+                        name="search" size="15">
+                        <button  type="Submit"><img src={% static 'images/search.png' %}></button>
+                    </form>
+                </div>
+        </div>
+        <div id="contentwrap">
+                {% block content %}{% endblock %}
+        </div>
+        <div id="footer">
+            <p>
+                <a href="mailto:contact@seoklab.org">contact@seoklab.org</a> |
+                <a href="http://seoklab.org" target="_blank">Lab. of Computational Biology and Biomolecular Engineering</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

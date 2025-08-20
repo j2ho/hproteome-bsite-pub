@@ -1,0 +1,53 @@
+{% extends "base_generic.html" %}
+<style>
+.search-wrapper {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+.search-wrapper.active {}
+.search-wrapper .input-holder {
+    height: 70px;
+    width:70px;
+    overflow: hidden;
+    background: rgba(255,255,255,0);
+    border-radius:6px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+{%load static %}
+{% block content %}
+
+    <div>
+        <br>
+        <div class="container1">
+        <div><br>
+        <h2> If you need help, see "Help - How to search" for guidelines</h2>
+        </div>
+        </div>
+        <div class="container">
+            <form action="{% url 'search_results' %}" method="get" class="search-bar">
+                <input name="q" type="text" placeholder="UniProt ID / Family (e.g. gpcr) / Protein name" name="search">
+                <button  type="Submit"><img src={% static 'images/search.png' %}></button>
+            </form>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br>
+                <strong>References</strong>
+                <ul>
+                <li>J. Sim, S. Kwon, and C. Seok*, HProteome-BSite: predicted binding sites and ligands in human 3D
+                    proteome, to be submitted (2022)</li>
+                <li>K. Tunyasuvunakool, et. al., Highly accurate protein structure prediction for the human proteome,
+                Nature. 596, 590-596 (2021).<a href="https://pubmed.ncbi.nlm.nih.gov/34293799" target="_blank"> [PUBMED]</a></li>
+                </ul>
+                <br>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,130 @@
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>PDBe Molstar - Helper functions</title>
+
+    <!-- Molstar CSS & JS -->
+    <link rel="stylesheet" type="text/css" href="/static/molstar2.css">
+    <script type="text/javascript" src="/static/molstar2.js"></script>
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      .msp-plugin ::-webkit-scrollbar-thumb {
+          background-color:#777
+      }
+      .viewerSection {
+        margin: 120px 0 0 50px;
+      }
+      #myViewer{
+        width:500px;
+        height: 500px;
+        position:relative;
+      }
+    </style>
+<style>
+.contentcollapse {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: white;
+}
+.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 1px;
+    width: 80%;
+    outline: none;
+    text-align: left;
+}
+.active, .collapsible:hover {
+    background-color: #555;
+}
+</style>
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div>
+    <br>
+  <h1>Search Results</h1>
+  <br>
+  
+      {% if object_list %}
+      {% for object in object_list %}
+      {% if object.get_absolute_url %}
+      <div style="margin-left:20px;">
+      <ul>
+      <h2><li><a href="{{ object.get_absolute_url }}">{{ object.uniprot }}</a> ({{object.protname}})</li></h2>
+      </ul>
+      </div>
+      {% else %} 
+          <p>Query: {{object}}</p>
+          <p><i>No match in the database due to poor model quality</i></p>
+          <br>
+      <div style="margin-top:20px; margin-left:20px;">
+        <button type="button" class="collapsible"><center><h4>See AF Structure on viewer [click]</h4></center></button>
+	<div class="contentcollapse">
+            <div style="margin-top: 100px; margin-left: 30px; background-color: #FFFFFF;" id="myViewer">
+            </div>
+      </div>
+</div>
+      <br>
+    <script>
+
+      //Create plugin instance
+      var viewerInstance = new PDBeMolstarPlugin();
+  
+      //Set options (Checkout available options list in the documentation)
+      var options = {
+        customData: {
+            url: 'https://alphafold.ebi.ac.uk/files/AF-{{object}}-F1-model_v1.pdb',
+          format: 'pdb'
+        },
+        alphafoldView: true,
+        bgColor: {r:255, g:255, b:255},
+        hideCanvasControls: ['selection', 'animation', 'controlToggle', 'controlInfo']
+      }
+      
+      //Get element from HTML/Template to place the viewer 
+      var viewerContainer = document.getElementById('myViewer');
+  
+      //Call render method to display the 3D view
+      viewerInstance.render(viewerContainer, options);
+      
+    </script>
+    <script>
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+var i;
+
+for (i = 0; i < coll.length; i++) {
+coll[i].addEventListener("click", function() {
+this.classList.toggle("active");
+var content = this.nextElementSibling;
+if (content.style.display === "block") {
+  content.style.display = "none";
+} else {
+  content.style.display = "block";
+}
+});
+}
+    </script> 
+    {% endif %}
+    {% endfor %}
+  {% else %}
+  <p><i>No match in the database</i></p>
+
+{% endif %}
+<div>
+</div>
+<br>
+  </div>
+
+    {% endblock %} 
+
+
+

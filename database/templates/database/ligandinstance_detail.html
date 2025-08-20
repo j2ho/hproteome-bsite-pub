@@ -1,0 +1,82 @@
+
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+
+        
+<div>
+    <br>
+    <div class="para_title_new">&nbsp&nbsp{{ligandinstance}}</div>
+        
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <div id=viewer>
+                        </div> 
+                    </td>
+                </tr> 
+            </tbody> 
+        </table>
+            <script src='/pv/js/jquery-2.0.2.min.js'></script>
+            <script src='/pv/js/jquery-ui.min.js'></script>
+            <script src='/pv/src/gl-matrix.js'></script>
+            <script src='/pv/src/core.js'></script>
+            <script src='/pv/src/geom.js'></script>
+            <script src='/pv/src/trace.js'></script>
+            <script src='/pv/src/mol.js'></script>
+            <script src='/pv/src/io.js'></script>
+            <script src='/pv/src/vert-assoc.js'></script>
+            <script src='/pv/src/buffer-allocators.js'></script>
+            <script src='/pv/src/vertex-array-base.js'></script>
+            <script src='/pv/src/indexed-vertex-array.js'></script>
+            <script src='/pv/src/vertex-array.js'></script>
+            <script src='/pv/src/chain-data.js'></script>
+            <script src='/pv/src/geom-builders.js'></script>
+            <script src='/pv/src/scene.js'></script>
+            <script src= '/pv/src/render.js'></script>
+            <script src='/pv/src/shade.js'></script>
+            <script src='/pv/src/cam.js'></script>
+            <script src='/pv/src/shaders.js'></script>
+            <script src='/pv/src/framebuffer.js'></script>
+            <script src='/pv/src/slab.js'></script>
+            <script src='/pv/src/animation.js'></script>
+            <script src='/pv/src/viewer.js'></script>
+            <script>
+            var pv = pv.Viewer(document.getElementById('viewer'),    
+                    { quality : 'medium', width: 660, height : 600,     
+                      antialias : true, outline : false,
+                      background : 'white',
+                      slabMode : 'auto'});
+
+            var structure;
+            
+            function load() {
+                pv.clear();
+                $.ajax({ url : '/data/{{ligandinstance.dockedfile}}', success : function(data) {
+                        structure = io.pdb(data);
+                        var protein = structure.select('protein');
+                        var ligand  = structure.select('ligand');
+                        var intr    = protein.selectWithin(ligand, {radius: 4.5, matchResidues: '1'});
+                        var intrSC  = intr.select({not_anames : ['N','C','O','H']});
+                        var camera  = structure.selectWithin(ligand, {radius: 10.0, matchResidues: '1'});
+                        
+                        pv.cartoon('protein', protein, {color: color.bySS()});
+                        pv.ballsAndSticks('ligand', ligand, {color: color.byElement2()});
+
+                        pv.fitTo(camera);
+
+                        }})
+                }
+            function model_1() {
+                load();
+            }
+                
+        document.addEventListener('DOMContentLoaded', model_1);
+
+            </script> 
+
+  </div>
+  <br>
+{% endblock %} 
+

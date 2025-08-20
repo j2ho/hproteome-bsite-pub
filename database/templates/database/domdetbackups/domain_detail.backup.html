@@ -1,0 +1,87 @@
+<script src="http://3Dmol.csb.pitt.edu/build/3Dmol-min.js""></script>
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <div style="margin-left:20px;margin-to:20px">
+      <h1>{{domain}} [{{domain.resnum}}]</h1>
+        <h3>PDB file - <a href="/database/download?path={{ domain.domainfile}}">[Download]</a></h3>
+        
+        <div style="height: 400px; width: 400px; position: relative;" class='viewer_3Dmoljs'data-href='/media/{{domain.domainfile}}' data-backgroundcolor='0xffffff' data-style='cartoon' data-ui='true'></div>     
+        
+        {% if domain.seqcsvfile %}
+        <h3>Sequence Result</h3>
+        <table>
+                <th>Site No.</th>
+                <th>Coordinate</th>
+                <th>Representative Ligand</th>
+                <th>Templates</th>
+        {% for site in domain.sites.all %}
+        {% if site.method == 'sequence' %}
+        <tr>
+            <td>{{site.rank}}</td>
+            <td>{{site.coordinate}}</td>
+            <td>
+                {% for ligand in site.ligands.all %}
+                {% if ligand.ligcoord == site.coordinate %} 
+                <p>{{ligand}}</p>
+                <p><a href="/database/download?path={{ligand.mol2file}}">[docking pose in mol2]</a> </p>
+                <p>
+                <a href="https://www.rcsb.org/ligand/{{ligand.ligname}}">[RCSB Info.]</a>
+                </p>
+                <td>{% for template in ligand.templates.all %}
+                    <p>{{template}}</p>
+                    {% endfor %}
+                </td>
+                </td>
+                {% endif %}
+                {% endfor %}
+            </td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </table>
+        {% endif %}
+
+        {% if domain.strcsvfile %}
+        <h3>Structure Result <a</h3>
+        <table>
+                <th>Site No.</th>
+                <th>Coordinate</th>
+                <th>Representative Ligand</th>
+                <th>Templates</th>
+        {% for site in domain.sites.all %}
+        {% if site.method == 'structure' %}
+        <tr>
+            <td>{{site.rank}}</td>
+            <td>{{site.coordinate}}</td>
+            <td>
+                {% for ligand in site.ligands.all %}
+                {% if ligand.ligcoord == site.coordinate %} 
+                <p>{{ligand}}</p>
+                <p><a href="/database/download?path={{ligand.mol2file}}">[docking pose in mol2]</a> </p>
+                <p>
+                <a href="https://www.rcsb.org/ligand/{{ligand.ligname}}">[RCSB Info.]</a>
+                </p>
+                <td>{% for template in ligand.templates.all %}
+                    <p>{{template}}</p>
+                    {% endfor %}
+                </td>
+                </td>
+                {% endif %}
+                {% endfor %}
+            </td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </table>
+        {%endif%}
+        {% if domain.seqcsvfile %}
+        <h3>Sequence search results (in csv) - <a href="/database/download?path={{domain.seqcsvfile}}">[Download]</a></h3>
+    {% endif %}
+        {% if domain.strcsvfile %}
+        <h3>Structure search results (in csv)   - <a href="/database/download?path={{domain.strcsvfile}}">[Download]</a></h3>
+    {% endif %}
+  </div>
+{% endblock %} 
+

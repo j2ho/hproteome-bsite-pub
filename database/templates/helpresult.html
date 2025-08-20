@@ -1,0 +1,41 @@
+{% extends "base_generic.html"%}
+{% load static %}
+{% block content %}
+          <div>
+              <br>
+              <div class="para_title">Interpreting Report Page </div>
+              <br>
+              <h2>&nbspThis page explains how to view and download the search results,<br> &nbspand how to run additional docking
+                  calculation based on HProteome-BSite predictions</h2>
+              <h3>&nbspOriginally the PV viewer is not shown as below</h3>
+              <img src={% static 'images/help101_1.png' %} width=900px; border=1px;>
+              <h3>&nbspOnce the viewer is unfolded, user can select structures to view directly on the web page<br>&nbspViewer can be folded again by clicking on the same button</h3>
+              <img src={% static 'images/help101.png' %} width=900px; border=1px;>
+              <h3>Results table</h3>
+              <img src={% static 'images/help102.png' %} width=900px; border=1px;>
+              <br>
+              <br>
+              <br>
+              <hr>
+              <br>
+              <h2>LIGAND DETAILS PAGE - MOL* viewer</h2>
+              <h3>By clicking on 'See Ligand Details (Mol*) from the results table,the ligand details page opens in
+                  a new window.<br>Here, you can view the complex structure using Mol* as the viewer.</h3>
+              <h3>For more information on features provided by Mol*, see <a
+                                                                             href="https://molstar.org/viewer-docs/">[Mol* Viewer Documentation]</a></h3>
+              <img src={% static 'images/help104.png' %} width=900px; border=1px;>
+              <br>
+              <br>
+              <br>
+              <br>
+              <hr>
+              <br>
+              <h2>CSV FILE</h2>
+              <h3>You can also download the full information provided in the table in '.csv' format</h3>
+              <img src={% static 'images/help4.png' %} width=900px; border=1px;>
+              <h3>The csv file includes information on all the predicted binding sites and ligands</h3>
+              <h3>The information from csv can be used for further docking at <a
+                      href="https://galaxy.seoklab.org/cgi-bin/submit.cgi?type=SITE_DOCK">[link]</a></h3>
+                <br>
+        </div>
+        {% endblock %}

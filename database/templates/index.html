@@ -1,0 +1,55 @@
+{% extends "base_generic.html" %}
+{%load static %}
+{% block content %}
+
+    <div>
+        <br>
+        <div class="container1">
+        <div>
+            <br>
+            <img src={% static 'images/logo.png' %} height="110" width="110">
+        </div>
+        <div><br>
+            <h1> Welcome to HProteome-BSite,<br> a database for ligand binding sites in human proteome </h1>
+        </div>
+        </div>
+        <br>
+        <br>
+        <div>
+            <ul class="frontpage-headline">
+                <li class="lefty">
+                    <span class="title">Proteins</span>
+                    <br>
+                    <span class="value">16,554</span>
+                </li>
+                <li class="centery">
+                    <span class="title">Interactions</span>
+                    <br>
+                    <span class="value">687,257</span>
+                </li>
+                <li class="righty">
+                    <span class="title">Ligands</span>
+                    <br>
+                    <span class="value">24,691</span>
+                </li>
+            </ul>
+        </div>
+        <div class="containerindex">
+            <form action="{% url 'search_results' %}" method="get" class="search-bar">
+                <input name="q" type="text" placeholder="UniProt ID / Family (e.g. gpcr) / Protein name" name="search">
+                <button  type="Submit"><img src={% static 'images/search.png' %}></button>
+            </form>
+        </div>
+        <br>
+                <strong>References</strong>
+                <ul>
+                <li>J. Sim, S. Kwon, and C. Seok*, HProteome-BSite: predicted binding sites and ligands in human 3D
+                    proteome, NAR. gkac873 (2022).<a href="https://pubmed.ncbi.nlm.nih.gov/36243970" target="_blank">
+                        [PUBMED]</a></li>
+                <li>K. Tunyasuvunakool, et. al., Highly accurate protein structure prediction for the human proteome,
+                Nature. 596, 590-596 (2021).<a href="https://pubmed.ncbi.nlm.nih.gov/34293799" target="_blank"> [PUBMED]</a></li>
+                </ul>
+                <br>
+    <br>
+    </div>
+{% endblock %}

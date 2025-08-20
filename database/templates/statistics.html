@@ -1,0 +1,27 @@
+{% extends "base_generic.html"%}
+{% load static%}
+{% block content %}
+          <div>
+              <br>
+              <h1> STATISTICS </h1>
+              <hr>
+            <br>
+              <h2>Number of proteins and predicted interactions in HProteome-Bsite</h2>
+            <ul>
+                <li><h3>16,554 proteins with predicted results</h3></li>
+                <li><h3> 687,257 protein-ligand interactions spanning 24,691 different ligands </h3></li>
+            </ul>
+                <img src={% static 'images/help8_new.png' %} height="450">
+            <br>
+            <hr>
+            <br>
+              <h2>Quality of model structures included in Hproteome-Bsite</h2>
+              <ul>
+                  <li><h3>Moderate accuracy model (pLDDT > 70) increaseed from 62% to 85% after curation</h3></li>
+              </ul> 
+                <img src={% static 'images/help9.png'%} height="350">
+                <h3><li>Interaction prediction was conducted only on models with at least moderate quality after
+                        curation</li></h3>
+              <br>
+        </div>
+        {% endblock %}
