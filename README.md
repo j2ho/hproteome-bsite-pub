@@ -20,9 +20,11 @@ HProteome-BSite is a comprehensive database and web interface for exploring huma
 - **Molecular Visualization**: Integration with MolStar for 3D structure viewing
 - **Bulk Download**: Comprehensive data export capabilities
 
+
 ### Binding Site Prediction Tool: GalaxySite2
-Outline of GalaxySite binding prediction on the AlphaFold human structure database. Details of this method can be found
-in the paper cited at the end. 
+- Provided predictions of binding sites and ligands were made using GalaxySite, a template based binding site prediction
+method. Upon building HProteome-BSite, I have updated GalaxySite both database- and algorithm-wise. 
+- Outline of GalaxySite binding prediction on the AlphaFold human structure database. Details of this method can be found in the paper cited at the end. 
 ![Binding Site Prediction Pipeline](assets/algorithm.png)
 
 
