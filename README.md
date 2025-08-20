@@ -17,7 +17,7 @@ HProteome-BSite is a comprehensive database and web interface for exploring huma
 ### Key Features
 - **Comprehensive Database**: Proteome-wide binding site information with over 20,000+ protein domains
 - **Interactive Web Interface**: User-friendly search and visualization with molecular structure viewing
-- **Django Framework**: Robust web application architecture with SQLite database
+- **Easy-docking via Web-server**: Docking predicted ligands to binding sites is possible through HProteome-BSite web server
 - **Molecular Visualization**: Integration with MolStar for 3D structure viewing
 - **Bulk Download**: Comprehensive data export capabilities
 
@@ -62,7 +62,7 @@ For questions about the HProteome-BSite database, please visit the [official web
 
 ## Citation
 
-If you use HProteome-BSite in your research, please cite:
+If you use HProteome-BSite (DB or docking) and/or GalaxySite in your research, please cite:
 
 **Paper**: [HProteome-BSite: A comprehensive database of human proteome-wide binding sites](https://doi.org/10.1093/nar/gkac873)
 
