@@ -6,7 +6,7 @@
 
 **Visit the live database**: [https://galaxy.seoklab.org/hproteome-bsite/database/](https://galaxy.seoklab.org/hproteome-bsite/database/)
 
-![HProteome-BSite Interface](media/images/galaxy_outline.png)
+![HProteome-BSite Interface](assets/mainpage.png)
 *Screenshot of the HProteome-BSite web interface*
 
 ## 📋 Project Overview
@@ -40,11 +40,7 @@ hproteome-bsite-pub/
 │   ├── settings.py            # Project settings
 │   ├── urls.py               # Main URL configuration
 │   └── wsgi.py               # WSGI application entry point
-├── media/                     # Media files and data
-│   ├── images/               # Static images
-│   └── sitedb/               # Protein structure and ligand data
-├── manage.py                  # Django management script
-└── import*.py                 # Data import and processing scripts
+└── manage.py                 # Django management 
 ```
 
 ## ⚠️ Repository Notes
